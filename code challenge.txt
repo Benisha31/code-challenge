@@ -1,0 +1,206 @@
+1...........................
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+public class ProgramCode 
+{
+	public static Map<String,String> getStudents(String studentsList)
+	{
+		
+		// Write a program to accept a list of students with marks as CSV values and perform the following tasks.
+		// Store the student details in a map.
+		// Store the name of the students with their status like "PASS" or "FAIL" based on the pass mark of 70.
+		// For the student with maximum mark - > Give the status as "TOPPER".
+		// For the student with minimum mark - >Give the status as "BOTTOM".
+		// Arrange the students based on their names in ascending order.
+		//convert name into title case
+		 Map<String,String> map=new  HashMap<String,String>(); 
+        int max=0;
+        int min=Integer.MAX_VALUE;
+        String bottom =null;
+        String topper=null;
+		StringTokenizer st=new StringTokenizer(studentsList,",") ;	
+		while(st.hasMoreTokens()){
+		    String name = st.nextToken();
+			name=Character.toUpperCase(name.charAt(0))+name.substring(1);
+
+			StringTokenizer token=new StringTokenizer(name,"-") ;	
+
+			String key1= token.nextToken();
+		    int value1 = Integer.parseInt(token.nextToken());
+		    if(value1>max){
+           	 max=value1;
+           	 topper=key1;
+            }
+		    if(value1<min){
+        	 min=value1;
+        	 bottom=key1;
+         }
+		    if(value1>70){
+			    map.put(key1, "PASS");
+		    	
+		    }else
+			    map.put(key1, "FAIL");
+		   
+
+		} map.put(topper, "TOPPER");
+	    map.put(bottom, "BOTTOM");
+		
+		return map;
+	}
+}
+///////////////////////////////////////////////////////////
+
+2.............
+public class ProgramCode 
+{
+	public static String getMonth(String studentsList)
+	{
+		
+		// Write a program to accept a list of students with DOB as CSV values and perform the following tasks.
+		// Find the younger student and return his month of Birth
+			//Hint : Map , SimpleDateFormat ,StringTokenizer
+
+		StringTokenizer st=new StringTokenizer(studentsList,",");
+		Date date1=new Date();
+		while(st.hasMoreTokens())
+		{	
+			String token=st.nextToken();
+			StringTokenizer st2=new StringTokenizer(token, "|");
+			String name=st2.nextToken();
+			String date=st2.nextToken();
+			try {
+				Date d=new SimpleDateFormat("dd-MM-yyyy").parse(date);
+				if(d.before(date1))
+				{
+					date1=d;		
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Date d=new SimpleDateFormat("dd-MM-yyyy").parse(date);
+				if(d.after(date1))
+				{
+					date1=d;		
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String month=new SimpleDateFormat("MMMM").format(date1);
+		return month;
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+3.............
+public class ProgramCode 
+{
+	public static List<String> getMonth(String seriesCode)
+	{
+		
+		// Write a program to accept a sample pattern and generate the next 5 , and return the list.
+		//EXAMPLES
+				// 1.   AH001  - > AH002 ,AH003,AH004 ,AH005,AH006
+				//2 .   HAWK01 - > HAWK02,HAWK02,HAWK03,HAWK05,HAWK06
+	      String res="";
+			StringBuffer sb = new StringBuffer();
+          String num="";
+          int num1=0;
+		List<String> list=new ArrayList<String>();
+		
+		for(char c:seriesCode.toCharArray())
+		{
+			if(Character.isLetter(c)||c=='0')
+				sb.append(c);
+			else
+				break;
+		}
+		
+		String digPart=seriesCode.substring(seriesCode.indexOf(sb.toString())+sb.toString().length());
+        num1=Integer.parseInt(digPart);
+	      for(int i=0;i<5;i++){
+           list.add(sb.toString()+num1);
+            num1++;
+	      }
+		return list;
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+4......................................................
+public class ProgramCode 
+{
+	public static List<String> getFruits(String seriesCode)
+	{
+		//Write a program to get a list of fruits as comma separated .
+		//Find the fruits whose characters are not duplicated
+		//Add them to a list and return.
+		
+		ArrayList<String> list=new ArrayList<>();
+		StringTokenizer st=new StringTokenizer(seriesCode,",");
+		while(st.hasMoreTokens())
+		{
+			Set<Character> set=new HashSet();
+			String s=st.nextToken();
+			
+		char[] c=s.toCharArray();
+		
+		for(char c1:c)
+		{
+			
+			
+			set.add(c1);
+		}
+		
+		if(s.length()==set.size())
+		{
+			list.add(s);
+		}
+		}
+		return list;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+5...............................
+
+
+public class ProgramCode 
+{
+	public static List<String> getFruits(Map<String,String> numbers)
+	{
+		//Write a program to get a map contains people name and mobile numbers as string.
+		//Find the persons having lucky mobile numbers.
+		//Lucky mobile numbers are found by find the sum of digits in a mobile number and check whether the sum is a prime or not.
+		//If prime Its a lucky number.
+		//return those persons as a list
+		List<String> list=new ArrayList();
+		int n,sum=0,flag=0;
+		for(Entry<String,String> m:numbers.entrySet()){
+			
+			long a= Long.parseLong(m.getValue());
+			sum=0;
+			while(a > 0)
+	        {
+	            n = (int) (a % 10);
+	            sum = sum + n;
+	            a = a / 10;
+	        }
+			flag=0;
+			for(int i=2;i<sum;i++)
+			{      
+			    if(sum%i==0)
+			    {
+			     flag=1;
+			     break;      
+			    }      
+			   }      
+			   if(flag==0)  { 
+				   list.add((String) m.getKey());
+			   }
+			  } 
+			
+		
+		return list;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
